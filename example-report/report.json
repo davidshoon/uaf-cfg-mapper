@@ -1,0 +1,500 @@
+{
+  "source": "/home/d/temp/examples/use_after_free.cpp",
+  "compiler": "g++",
+  "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "compiler_exit_code": 0,
+  "graphs": [
+    "cfg.dot"
+  ],
+  "memory_blocks": [
+    {
+      "node": "fn_17_basic_block_2",
+      "kinds": [
+        "allocation"
+      ],
+      "gcc_label": "{\\<bb 2\\>:\\l|p = malloc (4);\\l|if (p == 0B)\\l  goto \\<bb 3\\>; [INV]\\lelse\\l  goto \\<bb 4\\>; [INV]\\l}",
+      "graph": "cfg.dot"
+    },
+    {
+      "node": "fn_17_basic_block_5",
+      "kinds": [
+        "deallocation"
+      ],
+      "gcc_label": "{\\<bb 5\\>:\\l|free (p);\\l}",
+      "graph": "cfg.dot"
+    },
+    {
+      "node": "fn_18_basic_block_2",
+      "kinds": [
+        "allocation"
+      ],
+      "gcc_label": "{\\<bb 2\\>:\\l|D.3917 = operator new (4);\\l|D.3893 = D.3917;\\l|D.3894 = 1;\\l|MEM[(int *)D.3893] = 7;\\l|D.3894 = 0;\\l|p = D.3893;\\l|p.0 = p;\\l|if (p.0 != 0B)\\l  goto \\<bb 3\\>; [INV]\\lelse\\l  goto \\<bb 4\\>; [INV]\\l}",
+      "graph": "cfg.dot"
+    },
+    {
+      "node": "fn_18_basic_block_3",
+      "kinds": [
+        "deallocation"
+      ],
+      "gcc_label": "{\\<bb 3\\>:\\l|*p.0 = \\{CLOBBER\\};\\l|operator delete (p.0, 4);\\l}",
+      "graph": "cfg.dot"
+    },
+    {
+      "node": "fn_19_basic_block_2",
+      "kinds": [
+        "allocation"
+      ],
+      "gcc_label": "{\\<bb 2\\>:\\l|D.3927 = operator new (4);\\l|D.3898 = D.3927;\\l|D.3899 = 1;\\l|MEM[(int *)D.3898] = 7;\\l|D.3899 = 0;\\l|p = D.3898;\\l|result = *p;\\l|p.1 = p;\\l|if (p.1 != 0B)\\l  goto \\<bb 3\\>; [INV]\\lelse\\l  goto \\<bb 4\\>; [INV]\\l}",
+      "graph": "cfg.dot"
+    },
+    {
+      "node": "fn_19_basic_block_3",
+      "kinds": [
+        "deallocation"
+      ],
+      "gcc_label": "{\\<bb 3\\>:\\l|*p.1 = \\{CLOBBER\\};\\l|operator delete (p.1, 4);\\l}",
+      "graph": "cfg.dot"
+    }
+  ],
+  "diagnostics": [
+    {
+      "kind": "warning",
+      "message": "use after \u2018free\u2019 of \u2018alias\u2019",
+      "option": "-Wanalyzer-use-after-free",
+      "option_url": "https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#index-Wanalyzer-use-after-free",
+      "children": [],
+      "column-origin": 1,
+      "locations": [
+        {
+          "caret": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "finish": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 17,
+            "byte-column": 17,
+            "column": 17
+          }
+        }
+      ],
+      "metadata": {
+        "cwe": 416
+      },
+      "path": [
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 4,
+            "display-column": 44,
+            "byte-column": 44,
+            "column": 44
+          },
+          "description": "allocated here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 5,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "assuming \u2018p\u2019 is non-NULL",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 5,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "following \u2018false\u2019 branch (when \u2018p\u2019 is non-NULL)...",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 6,
+            "display-column": 8,
+            "byte-column": 8,
+            "column": 8
+          },
+          "description": "...to here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 8,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "following \u2018true\u2019 branch (when \u2018release != false\u2019)...",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 8,
+            "display-column": 27,
+            "byte-column": 27,
+            "column": 27
+          },
+          "description": "...to here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 8,
+            "display-column": 27,
+            "byte-column": 27,
+            "column": 27
+          },
+          "description": "freed here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "description": "use after \u2018free\u2019 of \u2018alias\u2019; freed at (7)",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        }
+      ],
+      "escape-source": false
+    },
+    {
+      "kind": "warning",
+      "message": "leak of \u2018p\u2019",
+      "option": "-Wanalyzer-malloc-leak",
+      "option_url": "https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#index-Wanalyzer-malloc-leak",
+      "children": [],
+      "column-origin": 1,
+      "locations": [
+        {
+          "caret": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "finish": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 17,
+            "byte-column": 17,
+            "column": 17
+          }
+        }
+      ],
+      "metadata": {
+        "cwe": 401
+      },
+      "path": [
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 4,
+            "display-column": 44,
+            "byte-column": 44,
+            "column": 44
+          },
+          "description": "allocated here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 5,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "assuming \u2018p\u2019 is non-NULL",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 5,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "following \u2018false\u2019 branch (when \u2018p\u2019 is non-NULL)...",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 6,
+            "display-column": 8,
+            "byte-column": 8,
+            "column": 8
+          },
+          "description": "...to here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 8,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "following \u2018false\u2019 branch (when \u2018release == false\u2019)...",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "description": "...to here",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 9,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "description": "\u2018p\u2019 leaks here; was allocated at (1)",
+          "function": "int malloc_bug(bool)",
+          "depth": 1
+        }
+      ],
+      "escape-source": false
+    },
+    {
+      "kind": "warning",
+      "message": "dereference of possibly-NULL \u2018operator new(4)\u2019",
+      "option": "-Wanalyzer-possible-null-dereference",
+      "option_url": "https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#index-Wanalyzer-possible-null-dereference",
+      "children": [],
+      "column-origin": 1,
+      "locations": [
+        {
+          "caret": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 13,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          }
+        }
+      ],
+      "metadata": {
+        "cwe": 690
+      },
+      "path": [
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 13,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "this call could return NULL",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 13,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "\u2018operator new(4)\u2019 could be NULL: unchecked value from (1)",
+          "function": "int new_bug()",
+          "depth": 1
+        }
+      ],
+      "escape-source": false
+    },
+    {
+      "kind": "warning",
+      "message": "use after \u2018delete\u2019 of \u2018p\u2019",
+      "option": "-Wanalyzer-use-after-free",
+      "option_url": "https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#index-Wanalyzer-use-after-free",
+      "children": [],
+      "column-origin": 1,
+      "locations": [
+        {
+          "caret": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 15,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          }
+        }
+      ],
+      "metadata": {
+        "cwe": 416
+      },
+      "path": [
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 13,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "allocated here",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 13,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "assuming \u2018operator new(4)\u2019 is non-NULL",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 14,
+            "display-column": 5,
+            "byte-column": 5,
+            "column": 5
+          },
+          "description": "following \u2018true\u2019 branch...",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 14,
+            "display-column": 12,
+            "byte-column": 12,
+            "column": 12
+          },
+          "description": "...to here",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 14,
+            "display-column": 12,
+            "byte-column": 12,
+            "column": 12
+          },
+          "description": "deleted here",
+          "function": "int new_bug()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 15,
+            "display-column": 13,
+            "byte-column": 13,
+            "column": 13
+          },
+          "description": "use after \u2018delete\u2019 of \u2018p\u2019; deleted at (5)",
+          "function": "int new_bug()",
+          "depth": 1
+        }
+      ],
+      "escape-source": false
+    },
+    {
+      "kind": "warning",
+      "message": "dereference of possibly-NULL \u2018operator new(4)\u2019",
+      "option": "-Wanalyzer-possible-null-dereference",
+      "option_url": "https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#index-Wanalyzer-possible-null-dereference",
+      "children": [],
+      "column-origin": 1,
+      "locations": [
+        {
+          "caret": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 19,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          }
+        }
+      ],
+      "metadata": {
+        "cwe": 690
+      },
+      "path": [
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 19,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "this call could return NULL",
+          "function": "int safe()",
+          "depth": 1
+        },
+        {
+          "location": {
+            "file": "/home/d/temp/examples/use_after_free.cpp",
+            "line": 19,
+            "display-column": 23,
+            "byte-column": 23,
+            "column": 23
+          },
+          "description": "\u2018operator new(4)\u2019 could be NULL: unchecked value from (1)",
+          "function": "int safe()",
+          "depth": 1
+        }
+      ],
+      "escape-source": false
+    }
+  ]
+}
